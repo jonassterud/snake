@@ -18,5 +18,8 @@ public:
     void draw(WINDOW * win);
     void move(WINDOW * win, unsigned int xMin, unsigned int xMax, unsigned int yMin, unsigned int yMax);
     void spawnFood(unsigned int xMin, unsigned int xMax, unsigned int yMin, unsigned int yMax);
+    
+    // Getters:
+    unsigned int getLength();
     bool isDead();
 };

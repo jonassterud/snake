@@ -1,6 +1,6 @@
 #include "Display.h"
 
-Display::Display()
+Display::Display(unsigned int lines, unsigned int cols, unsigned int yBegin, unsigned int xBegin)
 {
     // Default options:
     initscr();
@@ -9,7 +9,7 @@ Display::Display()
     curs_set(0);
 
     // Set variables:
-    win = newwin(30, 60, 1, 1);
+    win = newwin(lines, cols, yBegin, xBegin);
     getbegyx(win, yMin, xMin);
     getmaxyx(win, yMax, xMax);
     refresh();

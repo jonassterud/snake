@@ -9,6 +9,6 @@ public:
     WINDOW * win;
 
     // Constructors:
-    Display();
+    Display(unsigned int yBegin, unsigned int xBegin, unsigned int lines, unsigned int cols);
     ~Display();
 };

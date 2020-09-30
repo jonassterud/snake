@@ -97,6 +97,11 @@ void Player::spawnFood(unsigned int xMin, unsigned int xMax, unsigned int yMin, 
     foodY = yMin + (rand() % static_cast<int>(yMax - yMin + 1));
 }
 
+unsigned int Player::getLength()
+{
+    return length;
+}
+
 bool Player::isDead()
 {
     return dead;
