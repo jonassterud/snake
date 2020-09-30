@@ -7,7 +7,7 @@ int main()
 {
     // Initiate objects:
     Display display(30, 60, 1, 1);
-    Player player(display.xMin, display.yMin);
+    Player player(display.xMin, display.yMin + 1);
 
     // Loop:
     player.spawnFood(display.xMin, display.yMax, display.yMin, display.yMax);
