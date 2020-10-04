@@ -10,18 +10,18 @@ int main()
     Player player(display.xMin, display.yMin + 1);
 
     // Loop:
-    player.spawnFood(display.xMin, display.yMax, display.yMin, display.yMax);
+    player.spawnFood(display);
     while(!player.isDead())
     {
         // Draw and move:
         player.draw(display.win);
-        player.move(display.win, display.xMin, display.xMax, display.yMin, display.yMax);
+        player.move(display);
 
         // Draw score:
         std::string score = "Score: " + std::to_string(player.getLength());
         mvwprintw(display.win, 1, 1, score.c_str());
         wrefresh(display.win);
-    }    
+    }
 
     // End:
     getch();

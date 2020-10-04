@@ -1,15 +1,10 @@
 #include "Player.h"
+#include "Display.h"
 #include <iostream>
 
 Player::Player(unsigned int X, unsigned int Y)
-{
-    x = X;
-    y = Y;
-    xDir = 1;
-    yDir = 0;
-    length = 5;
-    dead = false;
-}
+    : x(X), y(Y), xDir(1), yDir(0), length(5), dead(false)
+{}
 
 void Player::draw(WINDOW * win)
 {
@@ -18,13 +13,13 @@ void Player::draw(WINDOW * win)
     wrefresh(win);
 }
 
-void Player::move(WINDOW * win, unsigned int xMin, unsigned int xMax, unsigned int yMin, unsigned int yMax)
+void Player::move(Display &display)
 {
     // Create tail:
     tail.insert(tail.begin(), std::vector<unsigned int>{x, y});
     if(tail.size() > length)
     {
-        mvwaddch(win, tail.back()[1], tail.back()[0], ' ');
+        mvwaddch(display.win, tail.back()[1], tail.back()[0], ' ');
         tail.pop_back();
     }
 
@@ -33,14 +28,14 @@ void Player::move(WINDOW * win, unsigned int xMin, unsigned int xMax, unsigned i
     y += yDir;
     
     // Teleport on edge hit:
-    if(x >= xMax - xMin)
-        x = xMin;
-    else if(x <= xMin - 1)
-        x = xMax - xMin - 1;
-    if(y >= yMax - yMin)
-        y = yMin;
-    else if(y <= yMin - 1)
-        y = yMax - yMin - 1;
+    if(x >= display.xMax - display.xMin)
+        x = display.xMin;
+    else if(x <= display.xMin - 1)
+        x = display.xMax - display.xMin - 1;
+    if(y >= display.yMax - display.yMin)
+        y = display.yMin;
+    else if(y <= display.yMin - 1)
+        y = display.yMax - display.yMin - 1;
 
     // Check for death:
     for(std::vector<unsigned int> v : tail)
@@ -52,12 +47,12 @@ void Player::move(WINDOW * win, unsigned int xMin, unsigned int xMax, unsigned i
     // Check for food:
     if(x == foodX && y == foodY)
     {
-        spawnFood(xMin, xMax, yMin, yMax);
+        spawnFood(display);
         length++;
     }
 
     // Change direction:
-    unsigned int c = wgetch(win);
+    unsigned int c = wgetch(display.win);
     switch(c)
     {
         case 97:    // Left
@@ -91,10 +86,10 @@ void Player::move(WINDOW * win, unsigned int xMin, unsigned int xMax, unsigned i
     }
 }
 
-void Player::spawnFood(unsigned int xMin, unsigned int xMax, unsigned int yMin, unsigned int yMax)
+void Player::spawnFood(Display &display)
 {
-    foodX = xMin + (rand() % static_cast<int>(xMax - xMin + 1));
-    foodY = yMin + (rand() % static_cast<int>(yMax - yMin + 1));
+    foodX = display.xMin + (rand() % static_cast<int>(display.xMax - display.xMin + 1));
+    foodY = display.yMin + (rand() % static_cast<int>(display.yMax - display.yMin + 1));
 }
 
 unsigned int Player::getLength()

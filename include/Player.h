@@ -1,14 +1,17 @@
 #pragma once
 #include <vector>
 #include <ncurses.h>
+#include "Display.h"
 
 class Player
 {
 private:
     // Variables:
-    bool dead;
+    unsigned int x, y;
     signed int xDir, yDir;
-    unsigned int x, y, foodX, foodY, length;
+    unsigned int length;
+    bool dead;
+    unsigned int foodX, foodY;
     std::vector<std::vector<unsigned int>> tail;
 public:
     // Constructors:
@@ -16,8 +19,8 @@ public:
 
     // Functions:
     void draw(WINDOW * win);
-    void move(WINDOW * win, unsigned int xMin, unsigned int xMax, unsigned int yMin, unsigned int yMax);
-    void spawnFood(unsigned int xMin, unsigned int xMax, unsigned int yMin, unsigned int yMax);
+    void move(Display &display);
+    void spawnFood(Display &display);
     
     // Getters:
     unsigned int getLength();
